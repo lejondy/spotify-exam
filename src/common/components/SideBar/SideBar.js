@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import Avatar from "../../../assets/images/avatar.svg";
 
-import config from '../../../config'
-import { getToken, removeToken } from '../../../utils/index'
-import SidebarOption from './SidebarOption'
+import config from "../../../config";
+import { getToken, removeToken } from "../../../utils/index";
+import SidebarOption from "./SidebarOption";
 import {
   faHeadphonesAlt,
   faHeart,
@@ -11,10 +12,10 @@ import {
   faSearch,
   faStream,
   faSignOutAlt,
-} from '@fortawesome/free-solid-svg-icons'
+} from "@fortawesome/free-solid-svg-icons";
 
 // import { ReactComponent as Avatar } from '../../../assets/images/avatar.svg'
-import './_sidebar.scss'
+import "./_sidebar.scss";
 
 // function renderSideBarOption(icon, text, { selected } = {}, handleClick) {
 //   return (
@@ -32,18 +33,18 @@ import './_sidebar.scss'
 // }
 
 export default function SideBar() {
-  const [activeMenu, setActiveMenu] = useState('discover')
-  const { authEndpoint, clientId, redirectUri } = config.api
-  const profile = useSelector((state) => state.profile.data) || {}
-  const hasProfile = typeof profile.display_name !== 'undefined'
+  const [activeMenu, setActiveMenu] = useState("discover");
+  const { authEndpoint, clientId, redirectUri } = config.api;
+  const profile = useSelector((state) => state.profile.data) || {};
+  const hasProfile = typeof profile.display_name !== "undefined";
 
   const handleNavClick = (name) => {
-    setActiveMenu(name)
-  }
+    setActiveMenu(name);
+  };
   const handleLogout = () => {
-    removeToken()
-    window.location.reload()
-  }
+    removeToken();
+    window.location.reload();
+  };
 
   return (
     <div className="sidebar">
@@ -52,7 +53,7 @@ export default function SideBar() {
           <a
             className="sidebar__option__login__btn"
             href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${config.scopes.join(
-              '%20',
+              "%20"
             )}&response_type=token&show_dialog=true`}
           >
             Login to Spotify
@@ -62,7 +63,7 @@ export default function SideBar() {
       {hasProfile && (
         <div className="sidebar__profile">
           <img
-            src={profile.images[0].url}
+            src={profile.images[0] ? profile.images[0].url : Avatar}
             alt="avatar"
             className="sidebar__profile__avatar"
           />
@@ -73,61 +74,61 @@ export default function SideBar() {
       <div className="sidebar__options">
         <SidebarOption
           icon={faHeadphonesAlt}
-          text={'Discover'}
-          selected={activeMenu === 'discover'}
+          text={"Discover"}
+          selected={activeMenu === "discover"}
           handleClick={(e) => {
-            e.preventDefault()
-            handleNavClick('discover')
+            e.preventDefault();
+            handleNavClick("discover");
           }}
         />
         <SidebarOption
           icon={faSearch}
-          text={'Search'}
-          selected={activeMenu === 'search'}
+          text={"Search"}
+          selected={activeMenu === "search"}
           handleClick={(e) => {
-            e.preventDefault()
-            handleNavClick('search')
+            e.preventDefault();
+            handleNavClick("search");
           }}
         />
         <SidebarOption
           icon={faHeart}
-          text={'Favourites'}
-          selected={activeMenu === 'favourites'}
+          text={"Favourites"}
+          selected={activeMenu === "favourites"}
           handleClick={(e) => {
-            e.preventDefault()
-            handleNavClick('favourites')
+            e.preventDefault();
+            handleNavClick("favourites");
           }}
         />
         <SidebarOption
           icon={faPlayCircle}
-          text={'Playlists'}
-          selected={activeMenu === 'playlists'}
+          text={"Playlists"}
+          selected={activeMenu === "playlists"}
           handleClick={(e) => {
-            e.preventDefault()
-            handleNavClick('playlists')
+            e.preventDefault();
+            handleNavClick("playlists");
           }}
         />
         <SidebarOption
           icon={faStream}
-          text={'Charts'}
-          selected={activeMenu === 'charts'}
+          text={"Charts"}
+          selected={activeMenu === "charts"}
           handleClick={(e) => {
-            e.preventDefault()
-            handleNavClick('charts')
+            e.preventDefault();
+            handleNavClick("charts");
           }}
         />
         {hasProfile && (
           <SidebarOption
             icon={faSignOutAlt}
-            text={'Logout'}
-            selected={activeMenu === 'logout'}
+            text={"Logout"}
+            selected={activeMenu === "logout"}
             handleClick={(e) => {
-              e.preventDefault()
-              handleLogout()
+              e.preventDefault();
+              handleLogout();
             }}
           />
         )}
       </div>
     </div>
-  )
+  );
 }
